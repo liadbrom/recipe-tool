@@ -1,11 +1,13 @@
 let elDropZone;
 let elRecipesContainer;
+let elPrintBtn;
 let fileCounter = 0;
 const A5_PAPER_HEIGHT_MM = 210.7;
 
 window.addEventListener('load', () => {
     elDropZone = document.getElementById('drop-zone');
     elRecipesContainer = document.getElementById('recipes-container');
+    elPrintBtn = document.getElementById('print-btn');
 });
 
 const dropHandler = e => {
@@ -39,6 +41,8 @@ const dropHandler = e => {
         });
         if (fileCounter) {
             elDropZone.style.display = 'none';
+            elPrintBtn.style.display = 'block';
+            elPrintBtn.addEventListener('click', () => window.print());
             document.body.style.padding = 0;
             elRecipesContainer.style.maxHeight = (fileCounter * A5_PAPER_HEIGHT_MM) - 1 + 'mm';
         }

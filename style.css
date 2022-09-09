@@ -131,6 +131,14 @@ section:hover .actions-panel {
     display: block;
 }
 
+.print-btn {
+    position: fixed;
+    display: none;
+    bottom: 20px;
+    left: 20px;
+    text-transform: uppercase;
+}
+
 @media print {
     body {
         background-color: unset;
@@ -141,6 +149,10 @@ section:hover .actions-panel {
     }
 
     .actions-panel {
+        display: none !important;
+    }
+
+    .print-btn {
         display: none !important;
     }
 
