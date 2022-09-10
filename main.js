@@ -23,6 +23,7 @@ const dropHandler = e => {
                 fr.readAsText(file);
                 fr.onload = () => {
                     const newSection = document.createElement('section');
+                    newSection.setAttribute('contenteditable', 'true');
                     newSection.innerHTML = `${fr.result}`;
                     injectLinkToTitle(newSection);
                     translateHeaders(newSection);

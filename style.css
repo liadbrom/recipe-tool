@@ -62,6 +62,7 @@ section {
     box-shadow: inset hsla(19, 25%, 28%, 0.35) 0 0 2px;
     background-color: white;
     border-radius: 8px;
+    outline: none;
 }
 
 [itemprop="recipeIngredient"] {
