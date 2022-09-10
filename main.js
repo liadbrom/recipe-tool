@@ -23,8 +23,8 @@ const dropHandler = e => {
                 fr.readAsText(file);
                 fr.onload = () => {
                     const newSection = document.createElement('section');
-                    newSection.setAttribute('contenteditable', 'true');
                     newSection.innerHTML = `${fr.result}`;
+                    makeEditable(newSection);
                     injectLinkToTitle(newSection);
                     translateHeaders(newSection);
                     newSection.querySelector('p img').parentElement.remove();
@@ -48,6 +48,11 @@ const dropHandler = e => {
             elRecipesContainer.style.maxHeight = (fileCounter * A5_PAPER_HEIGHT_MM) - 1 + 'mm';
         }
     }
+}
+
+const makeEditable = (newSection) => {
+    newSection.querySelector('[itemprop="recipeIngredient"]').setAttribute('contenteditable', 'true');
+    newSection.querySelector('[itemprop="recipeInstructions"').setAttribute('contenteditable', 'true');
 }
 
 const dragOverHandler = e => {

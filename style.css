@@ -13,7 +13,8 @@
     src: url('fonts/Heebo-ExtraBold.ttf');
 }
 
-html, body {
+html,
+body {
     --gray: hsl(0, 0%, 25%);
     --light-gray: hsl(0, 0%, 45%);
     color: hsla(19, 25%, 28%, 0.8);
@@ -50,6 +51,7 @@ body {
     background-color: whitesmoke;
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 section {
@@ -62,6 +64,10 @@ section {
     box-shadow: inset hsla(19, 25%, 28%, 0.35) 0 0 2px;
     background-color: white;
     border-radius: 8px;
+    overflow: hidden;
+}
+
+[itemprop] {
     outline: none;
 }
 
@@ -74,7 +80,17 @@ section.split {
     height: 421.4mm;
 }
 
-section.split .split-btn::after{
+section.split::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    border-top: dashed 1px hsla(19, 25%, 28%, 0.35);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+section.split .split-btn::after {
     content: 'unsplit page';
 }
 
@@ -123,9 +139,9 @@ input[type=number] {
     background-color: whitesmoke;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button {  
-   opacity: 1;
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
 }
 
 section:hover .actions-panel {
@@ -147,6 +163,7 @@ section:hover .actions-panel {
 
     .recipes-container {
         background-color: unset;
+        gap: 0;
     }
 
     .actions-panel {
@@ -155,6 +172,10 @@ section:hover .actions-panel {
 
     .print-btn {
         display: none !important;
+    }
+
+    section.split::after {
+        display: none;
     }
 
     @page {
