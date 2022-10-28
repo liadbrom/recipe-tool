@@ -56,15 +56,17 @@ body {
 
 section {
     position: relative;
-    height: 210.7mm;
+    height: 209.8mm;
     width: 148mm;
-    padding: 0.5cm 1cm;
+    padding: 0.5cm 1.4cm 0.5cm 1cm;
     box-sizing: border-box;
     font-family: 'Heebo Regular';
+    color: black;
     box-shadow: inset hsla(19, 25%, 28%, 0.35) 0 0 2px;
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
+    outline: none;
 }
 
 [itemprop] {
@@ -77,7 +79,7 @@ section {
 }
 
 section.split {
-    height: 421.4mm;
+    height: 419.6mm;
 }
 
 section.split::after {
@@ -172,6 +174,10 @@ section:hover .actions-panel {
 
     .print-btn {
         display: none !important;
+    }
+
+    section {
+        box-shadow: none;
     }
 
     section.split::after {

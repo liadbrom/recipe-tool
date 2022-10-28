@@ -2,7 +2,7 @@ let elDropZone;
 let elRecipesContainer;
 let elPrintBtn;
 let fileCounter = 0;
-const A5_PAPER_HEIGHT_MM = 210.7;
+const A5_PAPER_HEIGHT_MM = 209.8;
 
 window.addEventListener('load', () => {
     elDropZone = document.getElementById('drop-zone');
@@ -26,7 +26,10 @@ const dropHandler = e => {
                     newSection.innerHTML = `${fr.result}`;
                     makeEditable(newSection);
                     injectLinkToTitle(newSection);
+                    removeSymbols(newSection);
                     translateHeaders(newSection);
+                    translateLabels(newSection);
+                    replaceUnwantedBrs(newSection);
                     newSection.querySelector('p img').parentElement.remove();
                     const ingredientsContainer = extractIngredientsHeader(newSection);
 
@@ -45,18 +48,43 @@ const dropHandler = e => {
             elPrintBtn.style.display = 'block';
             elPrintBtn.addEventListener('click', () => window.print());
             document.body.style.padding = 0;
-            elRecipesContainer.style.maxHeight = (fileCounter * A5_PAPER_HEIGHT_MM) - 1 + 'mm';
         }
     }
 }
 
 const makeEditable = (newSection) => {
-    newSection.querySelector('[itemprop="recipeIngredient"]').setAttribute('contenteditable', 'true');
-    newSection.querySelector('[itemprop="recipeInstructions"').setAttribute('contenteditable', 'true');
+    newSection.setAttribute('contenteditable', 'true');
+    newSection.querySelector('[itemprop="name"]').setAttribute('contenteditable', 'false');
 }
 
 const dragOverHandler = e => {
     e.preventDefault();
+}
+
+const removeSymbols = (newSection) => {
+    Array.from(newSection.getElementsByTagName('p')).forEach(p => {
+        if (p.innerHTML.includes('♥') || p.innerHTML.includes('★')) {
+            p.remove();
+        }
+    })
+}
+
+replaceUnwantedBrs = (newSection) => {
+    Array.from(newSection.getElementsByTagName('br')).forEach(br => {
+        if (br.parentElement === newSection) {
+            let span = document.createElement('span');
+            span.innerHTML = ' | ';
+            br.parentNode.insertBefore(span, br.nextSibling);
+            br.remove();
+        }
+    })
+
+    // Remove trailing sapns
+    let currSpan = newSection.querySelector('span:last-of-type');
+    while (currSpan && currSpan.innerHTML === ' | ' && currSpan.nextSibling.tagName === 'DIV') {
+        currSpan.remove();
+        currSpan = newSection.querySelector('span:last-of-type');
+    }
 }
 
 const injectLinkToTitle = (newSection) => {
@@ -72,8 +100,21 @@ const translateHeaders = (newSection) => {
             header.innerHTML = 'מצרכים';
         } else if (header.innerHTML === 'Recipe') {
             header.innerHTML = 'הוראות הכנה'
+        } else if (header.innerHTML === 'Comments') {
+            header.innerHTML = 'הערות'
         }
     });
+}
+
+const translateLabels = (newSection) => {
+    let newContent = String(newSection.innerHTML);
+    newContent = newContent.replaceAll(/min/gi, 'דקות')
+        .replaceAll(/ : /gi, ': ')
+        .replaceAll(/Yield/gi, 'מנות')
+        .replaceAll(/Total/gi, 'זמן כולל')
+        .replaceAll(/Cooking/gi, 'זמן בישול')
+        .replaceAll(/Preparation/gi, 'זמן הכנה')
+    newSection.innerHTML = newContent;
 }
 
 const extractIngredientsHeader = (newSection) => {
