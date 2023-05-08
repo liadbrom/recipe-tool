@@ -69,6 +69,13 @@ section {
     outline: none;
 }
 
+.section-placeholder {
+    box-shadow: none;
+    border: 2px dashed hsla(19, 25%, 28%, 0.35);
+    background: transparent;
+    outline: none;
+}
+
 [itemprop] {
     outline: none;
 }

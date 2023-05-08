@@ -2,6 +2,7 @@ let elDropZone;
 let elRecipesContainer;
 let elPrintBtn;
 let fileCounter = 0;
+let firstDrop = true;
 const A5_PAPER_HEIGHT_MM = 209.8;
 
 window.addEventListener('load', () => {
@@ -43,11 +44,17 @@ const dropHandler = e => {
                 }
             }
         });
-        if (fileCounter) {
+        if (fileCounter && firstDrop) {
             elDropZone.style.display = 'none';
             elPrintBtn.style.display = 'block';
             elPrintBtn.addEventListener('click', () => window.print());
             document.body.style.padding = 0;
+            $("#recipes-container").sortable({
+                tolerance: "pointer",
+                handle: "[itemprop='name']",
+                placeholder: "section-placeholder"
+            });
+            firstDrop = false;
         }
     }
 }
@@ -79,7 +86,7 @@ replaceUnwantedBrs = (newSection) => {
         }
     })
 
-    // Remove trailing sapns
+    // Remove trailing spans
     let currSpan = newSection.querySelector('span:last-of-type');
     while (currSpan && currSpan.innerHTML === ' | ' && currSpan.nextSibling.tagName === 'DIV') {
         currSpan.remove();
@@ -108,12 +115,12 @@ const translateHeaders = (newSection) => {
 
 const translateLabels = (newSection) => {
     let newContent = String(newSection.innerHTML);
-    newContent = newContent.replaceAll(/min/gi, 'דקות')
+    newContent = newContent.replaceAll(/\bmin\b/gi, 'דקות')
         .replaceAll(/ : /gi, ': ')
-        .replaceAll(/Yield/gi, 'מנות')
-        .replaceAll(/Total/gi, 'זמן כולל')
-        .replaceAll(/Cooking/gi, 'זמן בישול')
-        .replaceAll(/Preparation/gi, 'זמן הכנה')
+        .replaceAll(/\bYield\b/gi, 'מנות')
+        .replaceAll(/\bTotal\b/gi, 'זמן כולל')
+        .replaceAll(/\bCooking\b/gi, 'זמן בישול')
+        .replaceAll(/\bPreparation\b/gi, 'זמן הכנה')
     newSection.innerHTML = newContent;
 }
 

@@ -8,12 +8,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oooh+Baby&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="main.js"></script>
     <title>Recipe Formatter</title>
 </head>
 
-<body>
-    <div id="drop-zone" class="drop-zone" ondragover="dragOverHandler(event);" ondrop="dropHandler(event);">
+<body ondragover="dragOverHandler(event);" ondrop="dropHandler(event);">
+    <div id="drop-zone" class="drop-zone">
         <h1 class="drop-zone__title">recipes go here</h1>
     </div>
     <div id="recipes-container" class="recipes-container">
